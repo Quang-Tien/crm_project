@@ -7,6 +7,9 @@ public class TaskModel {
     private String name;
     private Date start_date;
     private Date end_date;
+    private int user_id;
+    private int job_id;
+    private int status_id;
 
     public int getId() {
         return id;
@@ -64,8 +67,6 @@ public class TaskModel {
         this.status_id = status_id;
     }
 
-    private int user_id;
-    private int job_id;
-    private int status_id;
+
 
 }

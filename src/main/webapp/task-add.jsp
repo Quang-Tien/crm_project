@@ -1,5 +1,12 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Date" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="utf-8">
@@ -10,15 +17,15 @@
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
     <title>Pixel Admin</title>
     <!-- Bootstrap Core CSS -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<c:url value="/bootstrap/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <link href="<c:url value="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" /> " rel="stylesheet">
     <!-- animation CSS -->
-    <link href="css/animate.css" rel="stylesheet">
+    <link href="<c:url value="/css/animate.css" /> " rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="<c:url value="/css/style.css" /> " rel="stylesheet">
     <!-- color CSS -->
-    <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
+    <link href="<c:url value="/css/colors/blue-dark.css" />" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,6 +33,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+
 
 <body>
     <!-- Preloader -->
@@ -42,12 +50,12 @@
                 </a>
                 <div class="top-left-part">
                     <a class="logo" href="index.html">
-                        <b>
-                            <img src="plugins/images/pixeladmin-logo.png" alt="home" />
-                        </b>
-                        <span class="hidden-xs">
-                            <img src="plugins/images/pixeladmin-text.png" alt="home" />
-                        </span>
+                          <b>
+                              <img src="<c:url value="/plugins/images/pixeladmin-logo.png"/>" alt="home" />
+                          </b>
+                          <span class="hidden-xs">
+                              <img src="<c:url value="/plugins/images/pixeladmin-text.png"/>" alt="home" />
+                          </span>
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
@@ -100,7 +108,7 @@
                     </li>
                     <li>
                         <a href="groupwork.jsp" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                        aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
+                                                                        aria-hidden="true"></i><span class="hide-menu">Dự Án</span></a>
                     </li>
                     <li>
                         <a href="task.jsp" class="waves-effect"><i class="fa fa-table fa-fw"
@@ -132,46 +140,47 @@
                     <div class="col-md-2 col-12"></div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material">
+                            <form action="<c:url value="/task/add" />" method="post" class="form-horizontal form-material">
                                 <div class="form-group">
                                     <label class="col-md-12">Dự án</label>
                                     <div class="col-md-12">
-                                        <select class="form-control form-control-line">
-                                            <option>Dự án CRM</option>
-                                            <option>Dự án Elearning</option>
-                                            <option>Dự án Rạp chiếu phim</option>
+                                        <select name="jobId" class="form-control form-control-line">
+                                        <c:forEach var="item" items="${listJobs}">
+                                            <option value=${item.getId()}> ${item.getName()} </option>
+                                        </c:forEach>
+
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Tên công việc</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Tên công việc"
+                                        <input name="name" type="text" placeholder="Tên công việc"
                                             class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Người thực hiện</label>
                                     <div class="col-md-12">
-                                        <select class="form-control form-control-line">
-                                            <option>Nguyễn Văn Tèo</option>
-                                            <option>Trần Thị Lan</option>
-                                            <option>Cao Ngọc Hiếu</option>
+                                        <select name="userId" class="form-control form-control-line">
+                                            <c:forEach var="item" items="${listUsers}">
+                                               <option value=${item.getId()}> ${item.getFullname()} </option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày bắt đầu</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line"> 
+                                        <input name="startDate" type="text" placeholder="dd/MM/yyyy"
+                                            class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ngày kết thúc</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line"> 
+                                        <input name="endDate" type="text" placeholder="dd/MM/yyyy"
+                                            class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -193,18 +202,18 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <!-- jQuery -->
-    <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Menu Plugin JavaScript -->
-    <script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
-    <!--slimscroll JavaScript -->
-    <script src="js/jquery.slimscroll.js"></script>
-    <!--Wave Effects -->
-    <script src="js/waves.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="js/custom.min.js"></script>
+      <!-- jQuery -->
+       <script src="<c:url value="/plugins/bower_components/jquery/dist/jquery.min.js" />"></script>
+       <!-- Bootstrap Core JavaScript -->
+       <script src="<c:url value="/bootstrap/dist/js/bootstrap.min.js"/>"></script>
+       <!-- Menu Plugin JavaScript -->
+       <script src="<c:url value="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"/>"></script>
+       <!--slimscroll JavaScript -->
+       <script src="<c:url value="/js/jquery.slimscroll.js"/>"></script>
+       <!--Wave Effects -->
+       <script src="<c:url value="/js/waves.js"/>"></script>
+       <!-- Custom Theme JavaScript -->
+       <script src="<c:url value="/js/custom.min.js"/>"></script>
 </body>
 
 </html>

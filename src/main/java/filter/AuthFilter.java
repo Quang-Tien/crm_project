@@ -30,6 +30,7 @@ public class AuthFilter implements Filter {
         else {
             filterChain.doFilter(req, resp);
         }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

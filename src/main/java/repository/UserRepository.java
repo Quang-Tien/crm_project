@@ -89,4 +89,55 @@ public class UserRepository {
         }
         return userModelList;
     }
+
+    public boolean insertUser(String fullname, String email, String password, int role_id) {
+        Connection connection = null;
+        boolean isSuccess = false;
+        try {
+            connection = MysqlConfig.getConnection();
+            String sql = "insert into users(email,password,fullname,role_id) values(?,?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            statement.setString(3, fullname);
+            statement.setInt(4, role_id);
+
+            isSuccess = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Error query insertUser : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.out.println("Connection-close error insertUser : " + e.getMessage());
+                }
+            }
+        }
+        return isSuccess;
+    }
+
+    public boolean deleteById(int id) {
+        Connection connection = null;
+        boolean isSuccess = false;
+        try {
+            connection = MysqlConfig.getConnection();
+            String sql = "delete from users u where u.id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            isSuccess = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Error query insertUser : " + e.getMessage());
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    System.out.println("Connection-close error insertUser : " + e.getMessage());
+                }
+            }
+        }
+        return isSuccess;
+    }
 }
